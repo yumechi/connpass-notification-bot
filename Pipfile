@@ -21,3 +21,6 @@ flake8 = '*'
 
 [requires]
 python_version = '3.7'
+
+[scripts]
+cron_post = "python src/main.py"
