@@ -9,15 +9,15 @@ admin_member_count_pattern = re.compile(r"(\D+)(\d+)人$")
 def scraping_run(event_url) -> dict:
     res = requests.get(event_url)
     soup = BeautifulSoup(res.text, "html.parser")
-    result = participants_data(soup.find_all(class_="participants_table"))
+    result = get_participants_data(soup.find_all(class_="participants_table"))
     return result
 
 
-def participants_data(parsed_data) -> OrderedDict:
+def get_participants_data(parsed_data) -> OrderedDict:
     ret_data = OrderedDict()
     for table in parsed_data:
         one_table = get_table_data(table)
-        participants_data.update(one_table)
+        ret_data.update(one_table)
     return ret_data
 
 
