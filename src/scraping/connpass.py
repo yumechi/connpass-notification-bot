@@ -6,7 +6,7 @@ import re
 admin_member_count_pattern = re.compile(r"(\D+)(\d+)人$")
 
 
-def run(event_url) -> dict:
+def scraping_run(event_url) -> dict:
     res = requests.get(event_url)
     soup = BeautifulSoup(res.text, "html.parser")
     result = participants_data(soup.find_all(class_="participants_table"))
@@ -14,11 +14,11 @@ def run(event_url) -> dict:
 
 
 def participants_data(parsed_data) -> OrderedDict:
-    participants_data = OrderedDict()
+    ret_data = OrderedDict()
     for table in parsed_data:
         one_table = get_table_data(table)
         participants_data.update(one_table)
-    return participants_data
+    return ret_data
 
 
 def get_table_data(table) -> dict:
@@ -42,7 +42,6 @@ def get_table_data(table) -> dict:
 
 def get_first_line_info(cells) -> (str, int):
     category_name = cells[0].get_text().strip()
-    func = None
     for pattern in ("参加者", "キャンセル"):
         if pattern in category_name:
             func = get_normal_member_data
@@ -82,5 +81,7 @@ def get_normal_member_data(category_name: str) -> (str, int):
 
 
 if __name__ == "__main__":
-    _res = run("https://teckup-tokyo.connpass.com/event/149255/participation")
+    _res = scraping_run(
+        "https://teckup-tokyo.connpass.com/event/149255/participation"
+    )
     print(_res)

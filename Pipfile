@@ -9,6 +9,8 @@ allow_prereleases = true
 [packages]
 requests = "*"
 beautifulsoup4 = "*"
+slacker = "*"
+json5 = "*"
 
 [dev-packages]
 pytest = '*'
