@@ -12,6 +12,7 @@ beautifulsoup4 = "*"
 slacker = "*"
 firebase-admin = "*"
 python-dotenv = "*"
+jinja2 = "*"
 
 [dev-packages]
 pytest = '*'

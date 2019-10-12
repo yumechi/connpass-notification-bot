@@ -1,0 +1,19 @@
+`{{ event_name }}` の参加者
+{%- for key, value in my_dict.items() %}
+{{ key }} [{{ value["member_count"]|e }}人]: {{ ", ".join(value["member"])|e }}
+{%- endfor %}
+{%- for key, diff in diff.items() %}
+{%- set add_diff = diff["add"] %}
+{%- set sub_diff = diff["sub"] %}
+{%- if add_diff or sub_diff %}
++++++++++++++++++++++++++++++++++++++++++
+{{ key }}
+{%- if add_diff %}
+新しい参加者 😀 {{ add_diff|count }}人:  {{ '、'.join(add_diff) }}
+{%- endif %}
+{%- if sub_diff %}
+新しいキャンセル者 😰 {{ sub_diff|count }}人:  {{ '、'.join(sub_diff) }}
+{%- endif %}
++++++++++++++++++++++++++++++++++++++++++
+{% endif %}
+{%- endfor %}
