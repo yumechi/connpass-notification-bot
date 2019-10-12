@@ -10,7 +10,6 @@ allow_prereleases = true
 requests = "*"
 beautifulsoup4 = "*"
 slacker = "*"
-json5 = "*"
 firebase-admin = "*"
 python-dotenv = "*"
 
