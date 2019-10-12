@@ -30,6 +30,8 @@ def get_table_data(table) -> dict:
         cells = row.findAll(["td", "th"])
         if is_first_line:
             category_name, member_count = get_first_line_info(cells)
+            if not category_name:
+                return table_data
             table_data[category_name] = {}
             table_data[category_name]["member_count"] = member_count
             table_data[category_name]["member"] = []
@@ -42,18 +44,24 @@ def get_table_data(table) -> dict:
 
 def get_first_line_info(cells) -> (str, int):
     category_name = cells[0].get_text().strip()
-    for pattern in ("参加者", "キャンセル"):
+
+    def __default_action(x) -> (str, int):
+        return "", 0
+
+    func = __default_action
+
+    # パターンに引っかからないものはパスする
+    # 具体的には管理者とキャンセルをパスする
+    for pattern in ("参加者",):
         if pattern in category_name:
             func = get_normal_member_data
             break
-    else:
-        func = get_admin_member_data
     return func(category_name)
 
 
 def get_admin_member_data(category_name: str) -> (str, int):
     """
-    管理者のメンバー情報を取得する
+    管理者のメンバー情報を取得する。原則利用しない。
     example: category_name='管理者4人'
     """
     member_match = admin_member_count_pattern.search(category_name)
@@ -66,7 +74,7 @@ def get_admin_member_data(category_name: str) -> (str, int):
 
 def get_normal_member_data(category_name: str) -> (str, int):
     """
-    通常参加者のメンバー情報を取得する
+    通常参加者のメンバー情報を取得する。キャンセルは原則使用しない。
     example: category_name='もくもくしたい人\n              参加者\n              6人'
     example: category_name='もくもくしたい人\n              キャンセル\n              6人'
     """
