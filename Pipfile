@@ -11,6 +11,8 @@ requests = "*"
 beautifulsoup4 = "*"
 slacker = "*"
 json5 = "*"
+firebase-admin = "*"
+python-dotenv = "*"
 
 [dev-packages]
 pytest = '*'
