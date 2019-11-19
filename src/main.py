@@ -2,6 +2,7 @@ from bot.firebase import FirebaseDataGetter, FirebaseDataSetter
 from message.MessageTemplate import NotificationMessage
 from scraping.connpass import scraping_run
 from bot.slack.slack_cron import slack_post
+from datetime import datetime, timezone
 
 
 class Application:
@@ -9,6 +10,11 @@ class Application:
     def run():
         notifications = FirebaseDataGetter("notifications")
         for event_key, post_setting in notifications.get_data().items():
+            # utc timezone
+            if "event_date" in post_setting and post_setting[
+                "event_date"
+            ] < datetime.now(timezone.utc):
+                continue
             result = scraping_run(post_setting["event_url"])
 
             message = NotificationMessage().create_message(
