@@ -52,6 +52,7 @@ def get_first_line_info(cells) -> (str, int):
 
     # パターンに引っかからないものはパスする
     # 具体的には管理者とキャンセルをパスする
+    # FIXME: 抽選中メンバーをどうするか
     for pattern in ("参加者",):
         if pattern in category_name:
             func = get_normal_member_data

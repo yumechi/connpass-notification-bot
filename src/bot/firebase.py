@@ -23,9 +23,14 @@ def init_firebase():
 def content_diff(
     connpass_data: dict, firebase_data: dict, diff_key: str
 ) -> dict:
-    diff = {}
+    """
+    Firebaseの参加者データとconnpassの参加者情報
+    のスクレイピング結果を比較する
+    """
+    # 取得初回firebaseのデータが空なので初期化
     if not firebase_data:
         firebase_data = {}
+    diff = {}
     for kind_key, kind_info in connpass_data.items():
         kind_diff = {"add": [], "sub": []}
         latest_data = kind_info.get(diff_key, [])
@@ -52,6 +57,11 @@ class FirebaseConnector:
 
 
 class FirebaseDataGetter(FirebaseConnector):
+    """
+    Firebaseデータ取用クラス
+    データモデルごとに分割したほうがいいかも
+    """
+
     def get_data(self, **kwargs):
         if hasattr(self, "content_name"):
             return getattr(self, "get_" + self.content_name, self.get_none)(
@@ -84,6 +94,11 @@ class FirebaseDataGetter(FirebaseConnector):
 
 
 class FirebaseDataSetter(FirebaseConnector):
+    """
+    Firebaseセット更新用クラス
+    データモデルごとに分割したほうがいいかも
+    """
+
     def set_members(self, key, data):
         try:
             doc_ref = self.connection.document(key)

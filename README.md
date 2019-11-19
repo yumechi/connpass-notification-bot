@@ -1,34 +1,49 @@
 # connpass-notification-bot
 Connpassの参加者増減をトラックするbotを作りたい
 
-# .env.json5 sample
+# firebase notification data sample
 
-```json5
+```json
 {
-    "your connpass event url": {
+    "{{your_event_name_1}}": {
+        "event_name": "{{your_event_name_1}}",
+        "event_date": "2019-12-13T15:00:00+00:00",
+        "event_url": "https://{{your_event_url_1}}/participation/",
         "send_to": [
             {
+                "token": "{{your_token_1}}",
                 "type": "slack",
-                "enable": true,
-                "token": "your bot auth token",
-                "channel_name": "bot-test",
+                "channel_name": "{{your_channel_name_1}}",
+                "enable": true
             },
             {
+                "token": "<your_token_2>",
                 "type": "slack",
-                "enable": false,
-                "token": "your bot auth token",
-                "channel_name": "connpass_notification",
-            },
-        ],
-        "title": "your event name",
+                "channel_name": "{{your_channel_name_2}}",
+                "enable": true
+            }
+        ]
     },
+    "{{your_event_name_2}}": {
+        "event_name": "{{your_event_name_2}}",
+        "event_date": "2019-11-15T15:00:00+00:00",
+        "event_url": "https://{{your_event_url_2}}/participation/",
+        "send_to": [
+            {
+                "token": "{{your_token_1}}",
+                "type": "slack",
+                "channel_name": "{{your_channel_name_1}}",
+                "enable": true
+            }
+        ]
+    }
 }
 ```
 
 # feature
 
-- [ ] save DB
-- [ ] participants diff
+- [x] save DB
+- [x] participants diff
 - [ ] send other chat service
     - [ ] gitter
     - [ ] discord
