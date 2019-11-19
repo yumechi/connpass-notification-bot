@@ -24,6 +24,8 @@ def content_diff(
     connpass_data: dict, firebase_data: dict, diff_key: str
 ) -> dict:
     diff = {}
+    if not firebase_data:
+        firebase_data = {}
     for kind_key, kind_info in connpass_data.items():
         kind_diff = {"add": [], "sub": []}
         latest_data = kind_info.get(diff_key, [])
